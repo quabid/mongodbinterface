@@ -88,6 +88,9 @@ public class DbClient {
                         + databaseName.toUpperCase() + " datatore.\n");
                 finder.setCollectionName(collectionName);
                 finder.find(mongoClient.getDatabase(databaseName), query);
+            } else {
+                printer.println(
+                        "\n\tCollection " + collectionName + " does not exist in the " + databaseName + " datastore!");
             }
         } catch (NoSuchElementException nse) {
             printer.println(
@@ -103,6 +106,9 @@ public class DbClient {
                         + databaseName.toUpperCase() + " datastore.\n");
                 finder.setCollectionName(collectionName);
                 finder.findEquals(mongoClient.getDatabase(databaseName), field, query);
+            } else {
+                printer.println(
+                        "\n\tCollection " + collectionName + " does not exist in the " + databaseName + " datastore!");
             }
         } catch (NoSuchElementException nse) {
             printer.println(
@@ -118,6 +124,9 @@ public class DbClient {
                         + databaseName.toUpperCase() + " datastore.");
                 finder.setCollectionName(collectionName);
                 finder.findAndEquals(mongoClient.getDatabase(databaseName), field, ltq, gtq);
+            } else {
+                printer.println(
+                        "\n\tCollection " + collectionName + " does not exist in the " + databaseName + " datastore!");
             }
         } catch (NoSuchElementException nse) {
             printer.println(
