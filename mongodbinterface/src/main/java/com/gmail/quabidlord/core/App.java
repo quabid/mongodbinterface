@@ -84,7 +84,7 @@ public class App {
                     break;
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
-            printer.println("\t\tMust enter a datastore URL and the name of a collection. ");
+            printer.println("\t\tThis program is expecting at a minimum a datastore URL connection string. ");
         } catch (Exception e) {
             printer.println("\n");
             e.printStackTrace();
