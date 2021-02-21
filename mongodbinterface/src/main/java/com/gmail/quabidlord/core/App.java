@@ -10,7 +10,6 @@ import com.mongodb.client.MongoClient;
 
 public class App {
     private final static PrintStream printer = new PrintStream(System.out);
-
     public static void main(String[] args) {
         Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
         mongoLogger.setLevel(Level.SEVERE);

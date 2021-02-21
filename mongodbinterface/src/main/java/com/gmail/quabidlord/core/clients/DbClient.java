@@ -115,7 +115,7 @@ public class DbClient {
         try {
             if (CollectionInspector.collectionExists(this.getClient(), databaseName, collectionName)) {
                 printer.println("\n\tQuerying the " + collectionName.toUpperCase() + " collection in the "
-                        + databaseName.toUpperCase() + " datastore.\n");
+                        + databaseName.toUpperCase() + " datastore.");
                 finder.setCollectionName(collectionName);
                 finder.findAndEquals(mongoClient.getDatabase(databaseName), field, ltq, gtq);
             }

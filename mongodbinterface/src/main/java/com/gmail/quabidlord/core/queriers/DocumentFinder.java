@@ -37,7 +37,7 @@ public class DocumentFinder {
             }
         };
 
-        printer.println("\n\tThe documents from the " + collectionName.toUpperCase() + " collection.\n");
+        printer.println("\nQuery: find all records in this collection.\n");
 
         itr.forEach(printConsumer);
 
@@ -60,7 +60,7 @@ public class DocumentFinder {
         };
 
         if (itr.iterator().hasNext()) {
-            printer.println("\n\tThe documents from the " + collectionName.toUpperCase() + " collection.\n");
+            printer.println("\nQuery: find all records than contain " + field.toUpperCase() + " field.\n");
             itr.forEach(printConsumer);
         } else {
             printer.println("\n\tNo record with field " + field.toUpperCase() + " found!\n\n");
@@ -85,7 +85,8 @@ public class DocumentFinder {
         };
 
         if (itr.iterator().hasNext()) {
-            printer.println("\n\tThe documents from the " + collectionName.toUpperCase() + " collection.\n");
+            printer.println(
+                    "\nQuery: find all records that contain " + field.toUpperCase() + " field with " + query.toUpperCase() + " value.\n");
             itr.forEach(printConsumer);
         } else {
             printer.println("\n\tNo record with field " + field.toUpperCase() + " that equals " + query.toUpperCase()
@@ -104,22 +105,25 @@ public class DocumentFinder {
      */
     public void findAndEquals(final MongoDatabase database, final String field, final String lessThanQuery,
             final String greaterThanQuery) {
-        final MongoCollection<Document> collection = database.getCollection(collectionName);
-        final FindIterable<Document> itr = collection
-                .find(Filters.and(Filters.lt(field, Integer.parseInt(lessThanQuery)),
-                        (Filters.gt(field, Integer.parseInt(greaterThanQuery)))));
-
         final Consumer<Document> printConsumer = new Consumer<Document>() {
             public void accept(final Document document) {
                 System.out.println(document.toJson() + "\n");
             }
         };
 
-        if (itr.iterator().hasNext()) {
-            printer.println("\n\tThe documents from the " + collectionName.toUpperCase() + " collection.\n");
+        final MongoCollection<Document> collection = database.getCollection(collectionName);
+        final FindIterable<Document> itr = collection
+                .find(Filters.and(Filters.lt(field, Double.parseDouble(lessThanQuery)),
+                        (Filters.gt(field, Double.parseDouble(greaterThanQuery)))));
+        boolean exists = itr.iterator().hasNext();
+        if (exists) {
+            printer.println("\nQuery: find records which contain " + field.toUpperCase()
+                    + " field with a value between " + lessThanQuery + " and " + greaterThanQuery + ".\n");
             itr.forEach(printConsumer);
         } else {
-            printer.println("\n\tNo record with field " + field.toUpperCase() + " that is less than " + lessThanQuery.toUpperCase() + " and greater than " + greaterThanQuery + " found!\n\n");
+            printer.println("\n\tNo record with field " + field.toUpperCase() + " that is less than "
+                    + lessThanQuery.toUpperCase() + " and greater than " + greaterThanQuery.toUpperCase()
+                    + " found!\n\n");
         }
     }
 }

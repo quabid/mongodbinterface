@@ -15,7 +15,6 @@ public final class CollectionInspector {
     public final static boolean collectionExists(MongoClient dbClient, String datastoreName, String collectionName) {
         Iterator<String> itr = dbClient.getDatabase(datastoreName).listCollectionNames().iterator();
         boolean exists = false;
-
         while (itr.hasNext()) {
             String collection = itr.next().toString().toLowerCase().trim();
             if (collection.equals(collectionName) || collection == collectionName) {
@@ -23,7 +22,6 @@ public final class CollectionInspector {
                 break;
             }
         }
-
         return exists;
     }
 
