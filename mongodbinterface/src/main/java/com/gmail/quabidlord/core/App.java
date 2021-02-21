@@ -87,6 +87,7 @@ public class App {
             printer.println("\t\tMust enter a datastore URL and the name of a collection. ");
         } catch (Exception e) {
             printer.println("\n");
+            e.printStackTrace();
         } finally {
             try {
                 dbc.disconnect();
