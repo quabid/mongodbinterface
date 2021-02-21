@@ -95,6 +95,7 @@ public class App {
                 return;
             } finally {
                 dbc = null;
+                databaseInspector = null;
             }
         }
 
