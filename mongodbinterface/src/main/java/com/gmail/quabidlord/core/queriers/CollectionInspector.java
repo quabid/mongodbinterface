@@ -1,12 +1,10 @@
 package com.gmail.quabidlord.core.queriers;
 
-import java.io.PrintStream;
 import java.util.Iterator;
 
 import com.mongodb.client.MongoClient;
 
 public final class CollectionInspector {
-    private final static PrintStream printer = new PrintStream(System.out);
 
     private CollectionInspector() {
         super();

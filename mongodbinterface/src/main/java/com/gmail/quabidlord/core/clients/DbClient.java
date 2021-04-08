@@ -2,7 +2,9 @@ package com.gmail.quabidlord.core.clients;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.gmail.quabidlord.core.collections.CollectionNames;
@@ -14,9 +16,10 @@ import com.mongodb.client.MongoClients;
 public class DbClient {
     private MongoClient mongoClient = null;
     private String connectionString = null;
-    private final DocumentFinder finder = new DocumentFinder();
     private boolean connected = false;
+    private final DocumentFinder finder = new DocumentFinder();
     private final PrintStream printer = new PrintStream(System.out);
+    private final Map<String, ArrayList<String>> datastoreCollectionMap = new HashMap<String, ArrayList<String>>();
 
     public DbClient() {
         super();
@@ -32,6 +35,19 @@ public class DbClient {
         testConnection();
     }
 
+    public final void setDatastoreCollectinMap() {
+        ArrayList<String> databases = this.getDatastoreNames();
+
+        for (String db : databases) {
+            Iterator<String> itr = mongoClient.getDatabase(db).listCollectionNames().iterator();
+            ArrayList<String> collections = new ArrayList<String>();
+            while (itr.hasNext()) {
+                collections.add(itr.next().toString().toLowerCase().trim());
+            }
+            datastoreCollectionMap.put(db, collections);
+        }
+    }
+
     public boolean isConnected() {
         return connected;
     }
@@ -42,6 +58,10 @@ public class DbClient {
 
     public ArrayList<String> getDatastoreNames() {
         return CollectionNames.names;
+    }
+
+    public Map<String, ArrayList<String>> getDatastoreCollectionMap() {
+        return datastoreCollectionMap;
     }
 
     public void disconnect() throws NullPointerException {
@@ -138,6 +158,7 @@ public class DbClient {
         mongoClient = MongoClients.create(connectionString);
         if (null != mongoClient) {
             CollectionNames.setCollectionNames(mongoClient.listDatabaseNames().iterator());
+            setDatastoreCollectinMap();
             connected = true;
         } else {
             connected = false;
