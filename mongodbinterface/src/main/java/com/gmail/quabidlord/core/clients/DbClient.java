@@ -83,6 +83,12 @@ public class DbClient {
 
     // Utils
 
+    public final void printDatabaseNames() {
+        for (String n : getDatabaseNames()) {
+            printer.println(n);
+        }
+    }
+
     public final void printDatabaseCollectionMap() {
         Iterator<?> itr = datastoreCollectionMap.entrySet().iterator();
 
