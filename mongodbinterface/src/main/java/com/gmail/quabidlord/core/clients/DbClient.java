@@ -87,7 +87,7 @@ public class DbClient {
         Iterator<?> itr = datastoreCollectionMap.entrySet().iterator();
 
         while (itr.hasNext()) {
-            Map.Entry<?, ?> me = (Map.Entry<?, ?>) itr.next();
+            Map.Entry<String,ArrayList<String>> me = (Map.Entry<String, ArrayList<String>>) itr.next();
             printer.println(me.getKey().toString().toUpperCase() + "'s Collections");
             ArrayList<String> coll = (ArrayList<String>) me.getValue();
 
